@@ -5,7 +5,7 @@ import fetchAndSaveNews from '../utils/fetchNews.js';
 export const getNews =async (req,res)=>{
     try {
         const news = await News.find().sort({publishedAt:-1});
-        res.json;
+        res.json(news);
     } catch (error) {
         res.status(500).send('Error fetching news from database');
     }
