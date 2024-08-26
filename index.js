@@ -9,7 +9,14 @@ const PORT = 4000;
 
 // CORS configuration
 // Allow requests from any origin
-app.use(cors()); // Use this if not using Vercel's headers
+
+const corsOptions = {
+    origin: 'https://news-panda.netlify.app',
+    optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  };
+
+
+app.use(cors(corsOptions)); 
 app.use(bodyParser.json());
 
 connectDB();
