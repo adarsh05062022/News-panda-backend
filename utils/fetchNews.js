@@ -40,14 +40,18 @@ const fetchAndSaveNews = async () => {
 
     // Save news data to the database
     for (const article of allNewsData) {
-      const news = new News({
-        title: article.title,
-        image: article.image,
-        publisher: article.publisher,
-        publishedAt: article.publishedAt,
-        url: article.url,
-      });
-      await news.save();
+      const existingNews = await News.findOne({ title: article.title, url: article.url });
+
+      if (!existingNews) {
+        const news = new News({
+          title: article.title,
+          image: article.image,
+          publisher: article.publisher,
+          publishedAt: article.publishedAt,
+          url: article.url,
+        });
+        await news.save();
+      }
     }
 
     // Ensure the collection size does not exceed 200 items

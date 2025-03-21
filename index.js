@@ -11,9 +11,16 @@ const PORT = 4000;
 // Allow requests from any origin
 
 const corsOptions = {
-    origin: 'https://news-panda.netlify.app',
-    optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
-  };
+  origin: function (origin, callback) {
+      const allowedOrigins = ['http://localhost:3000', 'https://news-panda.netlify.app'];
+      if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, origin);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
+  },
+  optionsSuccessStatus: 200
+};
 
 
 app.use(cors(corsOptions)); 
